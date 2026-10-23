@@ -37,6 +37,19 @@ h2{font:500 18px/1.35 var(--fh);color:#e6f0ff;margin:0 0 11px}#question{font-siz
 .actions{display:flex;gap:8px;margin-top:12px}.btn{flex:1;padding:11px 12px;border:1px solid #7f9bff;background:linear-gradient(#3b63d4,#1f2f78);color:#eaf2ff;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:.2s}.btn:hover:not(:disabled){filter:brightness(1.2);transform:translateY(-1px)}.btn:disabled{opacity:.4;cursor:not-allowed}.btn.secondary{background:#121b33;border-color:#43598a;color:#c3d2ee}
 .feedback{font-size:12px;line-height:1.55;color:#a5b8d8;min-height:39px;margin-top:11px}.feedback.big{font-size:14.5px;line-height:1.65}
 #scrollHint{display:none;flex:1;align-items:center;justify-content:center;gap:8px;padding:11px 12px;border:1px dashed #7fb4ff;background:#0b1630;color:#bfe6fa;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;animation:hintPulse 1.8s ease-in-out infinite}
+#wrongBox{display:none}
+.wb-hint{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 12px;margin-bottom:14px;border:1px dashed #7fb4ff;background:#0b1630;color:#bfe6fa;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;animation:hintPulse 1.8s ease-in-out infinite}
+.wb-tag{font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.wb-exp{font-size:14.5px;line-height:1.7;color:#dbe7fa}
+.wb-recap{margin-top:16px;padding-top:12px;border-top:1px solid #2a3a5e}
+.wb-rt{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#7f97c0}
+.wb-diagram{margin:8px 0 0;padding:6px;background:#080e1e;border:1px solid #2a3a5e}.wb-diagram svg{display:block;width:100%;height:auto;max-width:200px;margin:auto}
+.wb-q{font-size:11.5px;line-height:1.5;color:#c4d3ec;margin:8px 0}
+.wb-opt{display:flex;align-items:center;gap:8px;padding:5px 8px;margin-bottom:5px;font-size:11.5px;line-height:1.4;color:#9fb1cf;background:#0e1730;border:1px solid #2c3d63}
+.wb-opt .k{width:18px;height:18px;flex:0 0 18px;display:grid;place-items:center;border:1px solid #3c5a9c;font-size:10px;color:var(--acc)}
+.wb-opt.good{color:#e2ffe9;background:#16321f;border-color:#4ade64;box-shadow:0 0 0 1px #4ade6488}.wb-opt.good .k{background:#4ade64;border-color:#4ade64;color:#052612;font-weight:700}
+.wb-opt.good::after{content:'\2713 Correct';margin-left:auto;padding-left:8px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#4ade64;white-space:nowrap}
+html.mob .wb-exp{font-size:12.5px}html.mob .wb-q,html.mob .wb-opt{font-size:10.5px}
 #understoodWrap{display:none;margin-top:12px}#understoodWrap .btn{width:100%;padding:13px 12px}.feedback.good{color:var(--green)}.feedback.bad{color:var(--red)}
 .quest-row{display:grid;grid-template-columns:25px 1fr auto;align-items:center;gap:9px;margin:12px 0}.rune{width:25px;height:25px;display:grid;place-items:center;border:1px solid #3d4f7d;color:#a7b8dc;font-size:11px}.rune.open{background:#10382a;border-color:#6fe0a0;color:#bcffd8;box-shadow:0 0 13px #4bd69033;animation:pop .6s}@keyframes pop{40%{transform:scale(1.35)}}
 .quest-row b{font:11px var(--fh);color:#dbe6fa;display:block}.quest-row small{font-size:10px;color:#8097c0;display:block;margin-top:4px}.status{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#8fa3c5}.status.open{color:#8fffc0}
@@ -108,7 +121,7 @@ html.rot body{overflow:hidden}html.rot #app{position:fixed;top:0;left:100%;width
 <div id="ending"><div class="end-card"><div class="sig">Mission report</div><h2 id="endTitle">The Long Way Home</h2><p id="endText"></p><div id="review"></div><a id="leaderboardBtn" href="ranking.html" data-leaderboard>View Leaderboard</a></div></div>
 </section>
 <aside id="sidebar">
-<section class="section"><div class="eyebrow" id="turnLabel">Trial 01</div><h2 id="questionTitle">A trial in the void</h2><p id="question">Begin the mission to receive your first challenge.</p><div id="qDiagram"></div><div class="answers" id="answers"></div><div id="dragHint"></div><div id="storyBox"></div>
+<section class="section"><div class="eyebrow" id="turnLabel">Trial 01</div><h2 id="questionTitle">A trial in the void</h2><p id="question">Begin the mission to receive your first challenge.</p><div id="qDiagram"></div><div class="answers" id="answers"></div><div id="missileNote" style="display:none;margin:0 0 4px;font-size:13px;line-height:1.5;color:#bfe6fa"><b>Options are written on the Missiles</b></div><div id="dragHint"></div><div id="storyBox"></div><div id="wrongBox"></div>
 <div class="actions"><button class="btn" id="lockBtn" disabled>Lock answer</button><div id="scrollHint">&#8595; Scroll below to continue</div><div id="confirmBox"><span class="confirm-q">Are you sure?</span><button class="btn" id="yesBtn">Yes</button><button class="btn secondary" id="noBtn">No</button></div></div>
 <div class="feedback" id="feedback">One answer per trial. Correct answers clear the next hazard.</div><div id="understoodWrap"><button class="btn" id="understoodBtn">I understood</button></div></section>
 <section class="section"><div class="eyebrow" id="jEye">Mission journal</div><h2>Hazards ahead</h2>
@@ -138,7 +151,7 @@ const bank=[
 {q:'Which of the following is a rational number?',a:['\u221A2','0.272727\u2026 (the block 27 repeats forever)','\u03C0','0.1010010001\u2026 (one more zero each time)','\u221A7'],c:[1],why:'A rational number can be written as p/q, where p and q are integers and q is not 0. The repeating decimal 0.272727\u2026 equals 27/99 = 3/11, so it is rational. \u221A2, \u221A7 and \u03C0 are irrational, and 0.1010010001\u2026 never ends or repeats, so it is irrational too.'},
 {q:'An angle added to twice itself makes a complementary angle. Find the angle.',a:['15\u00B0','30\u00B0','45\u00B0','60\u00B0','20\u00B0'],c:[1],why:'Complementary angles add up to 90\u00B0. If the angle is x, then x + 2x = 90\u00B0, so 3x = 90\u00B0 and x = 30\u00B0. Check: 30\u00B0 + 60\u00B0 = 90\u00B0.'}
 ];
-const bank2=[{diagram:'<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A diamond shaped quadrilateral ABCD with A at the top, B on the right, C at the bottom and D on the left. Diagonal AC runs top to bottom and diagonal BD runs left to right, crossing at the centre O."><g stroke="#ff5a5a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><polygon points="180,28 334,150 180,272 26,150"/><line x1="180" y1="28" x2="180" y2="272"/><line x1="26" y1="150" x2="334" y2="150"/></g><g fill="#ff5a5a"><circle cx="180" cy="28" r="4.5"/><circle cx="334" cy="150" r="4.5"/><circle cx="180" cy="272" r="4.5"/><circle cx="26" cy="150" r="4.5"/><circle cx="180" cy="150" r="4.5"/></g><g fill="#e4ecff" font-family="Orbitron,Inter,sans-serif" font-size="20" font-weight="700" text-anchor="middle"><text x="180" y="20">A</text><text x="348" y="156">B</text><text x="180" y="296">C</text><text x="12" y="156">D</text><text x="196" y="170" font-size="16">O</text></g></svg>',q:'In the figure, ABCD is a rhombus and its diagonals AC and BD meet at O. Which statement about parallel and perpendicular lines is correct?',a:['AB \u2225 BC, AD \u2225 DC and AC \u22A5 BD','AB \u2225 DC, AD \u2225 BC and AB \u22A5 BC','AC \u2225 BD, AB \u2225 DC and AB \u22A5 DC','AB \u2225 DC, AD \u2225 BC and AC \u22A5 BD','AB \u2225 DC, AC \u2225 BD and AD \u22A5 BC'],c:[3],multi:true,why:'In a rhombus the opposite sides never meet, so AB \u2225 DC and AD \u2225 BC. The diagonals AC and BD cross at O at a right angle, so AC \u22A5 BD. The other options each break a rule: adjacent sides such as AB and BC meet at B, so they are not parallel; adjacent sides of a rhombus meet at a slant, not at 90\u00B0; the diagonals cross at O, so they are not parallel; and AD and BC are opposite sides, so they are parallel, not perpendicular.'},
+const bank2=[{diagram:'<svg viewBox="-16 -16 392 336" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A diamond shaped quadrilateral ABCD with A at the top, B on the right, C at the bottom and D on the left. Diagonal AC runs top to bottom and diagonal BD runs left to right, crossing at the centre O."><g stroke="#ff5a5a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><polygon points="180,28 334,150 180,272 26,150"/><line x1="180" y1="28" x2="180" y2="272"/><line x1="26" y1="150" x2="334" y2="150"/></g><g fill="#ff5a5a"><circle cx="180" cy="28" r="4.5"/><circle cx="334" cy="150" r="4.5"/><circle cx="180" cy="272" r="4.5"/><circle cx="26" cy="150" r="4.5"/><circle cx="180" cy="150" r="4.5"/></g><g fill="#ffffff" stroke="#05070f" stroke-width="5" paint-order="stroke" stroke-linejoin="round" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="700" text-anchor="middle"><text x="180" y="14">A</text><text x="354" y="160">B</text><text x="180" y="304">C</text><text x="6" y="160">D</text><text x="200" y="176" font-size="24" fill="#7fe0ff">O</text></g></svg>',q:'In the figure, ABCD is a rhombus and its diagonals AC and BD meet at O. Which statement about parallel and perpendicular lines is correct?',a:['AB \u2225 BC, AD \u2225 DC and AC \u22A5 BD','AB \u2225 DC, AD \u2225 BC and AB \u22A5 BC','AC \u2225 BD, AB \u2225 DC and AB \u22A5 DC','AB \u2225 DC, AD \u2225 BC and AC \u22A5 BD','AB \u2225 DC, AC \u2225 BD and AD \u22A5 BC'],c:[3],multi:true,why:'In a rhombus the opposite sides never meet, so AB \u2225 DC and AD \u2225 BC. The diagonals AC and BD cross at O at a right angle, so AC \u22A5 BD. The other options each break a rule: adjacent sides such as AB and BC meet at B, so they are not parallel; adjacent sides of a rhombus meet at a slant, not at 90\u00B0; the diagonals cross at O, so they are not parallel; and AD and BC are opposite sides, so they are parallel, not perpendicular.'},
 {q:'An angle added to its double becomes a supplementary angle. Find the angle.',a:['30\u00B0','45\u00B0','60\u00B0','90\u00B0','120\u00B0'],c:[2],why:'Supplementary angles add up to 180\u00B0. If the angle is x, then x + 2x = 180\u00B0, so 3x = 180\u00B0 and x = 60\u00B0. Check: 60\u00B0 + 120\u00B0 = 180\u00B0.'},
 {q:'Which of the following are natural numbers? Select all that apply.',a:['0','\u22124','25','1/2','108'],c:[2,4],why:'Natural numbers are the counting numbers 1, 2, 3, 4, \u2026 so 25 and 108 are natural numbers. 0 is a whole number but not a natural number, \u22124 is a negative integer, and 1/2 is a fraction.'}];
 const bank3=[
@@ -526,7 +539,7 @@ function showDragHint(i){
  $('qDiagram').style.display='none';$('question').style.display='none';$('answers').style.display='none';box.style.display='block'}
 function hideDragHint(){const box=$('dragHint');if(!box)return;box.style.display='none';box.innerHTML='';hideStory();$('qDiagram').style.display='';$('question').style.display='';$('answers').style.display=''}
 function showStory(eyebrow,headline,text,icon){const sb=$('storyBox');if(!sb)return;const dh=$('dragHint');if(dh){dh.style.display='none';dh.innerHTML=''}
- $('qDiagram').style.display='none';$('question').style.display='none';$('answers').style.display='none';$('turnLabel').textContent=eyebrow;$('questionTitle').textContent=headline;
+ $('missileNote').style.display='none';$('qDiagram').style.display='none';$('question').style.display='none';$('answers').style.display='none';$('turnLabel').textContent=eyebrow;$('questionTitle').textContent=headline;
  sb.innerHTML='';const a=document.createElement('div');a.className='st-ic';a.textContent=icon||'✦';const b=document.createElement('div');b.className='st-tx';b.textContent=text;sb.append(a,b);sb.style.display='flex';$('feedback').className='feedback';$('feedback').textContent=''}
 function hideStory(){const sb=$('storyBox');if(sb){sb.style.display='none';sb.innerHTML=''}}
 function renderQuestion(){
@@ -536,8 +549,20 @@ function renderQuestion(){
  $('turnLabel').textContent=`Planet ${roman[phase]} · Trial ${l+1} of 3`;$('questionTitle').textContent=`${P.name} · ${P.obs[opened.findIndex(v=>!v)>=0?opened.findIndex(v=>!v):0].label}`;$('question').textContent=q.q;
  const host=$('answers');host.innerHTML='';q.a.forEach((a,i)=>{const b=document.createElement('button');b.className='answer';b.innerHTML=`<span class="key">${String.fromCharCode(65+i)}</span><span>${a}</span>`;b.addEventListener('click',()=>{if(locked||!started||state==='walking'||seq)return;hideConfirm();if(multi){selected=selected.includes(i)?selected.filter(v=>v!==i):[...selected,i]}else{selected=[i]}[...host.children].forEach((el,j)=>el.classList.toggle('chosen',selected.includes(j)));$('lockBtn').disabled=selected.length===0});host.appendChild(b)});
  hideConfirm();$('lockBtn').disabled=true;$('feedback').className='feedback';$('feedback').textContent=multi?'Choose the correct option or options, then lock it.':'Choose the correct option, then lock.';battleQuestion(q);updateUI()}
-function waitUnderstood(){awaiting=true;hideConfirm();$('lockBtn').style.display='none';$('scrollHint').style.display='flex';$('understoodWrap').style.display='block'}
-function clearUnderstood(){awaiting=false;$('scrollHint').style.display='none';$('understoodWrap').style.display='none';$('feedback').classList.remove('big')}
+let wrongShown=false;
+function waitUnderstood(){awaiting=true;hideConfirm();$('lockBtn').style.display='none';
+ if($('feedback').classList.contains('bad'))showWrong();else $('scrollHint').style.display='flex';
+ $('understoodWrap').style.display='block'}
+function showWrong(){
+ const q=questions[turn],ci=Array.isArray(q.c)?q.c:[q.c],box=$('wrongBox'),fb=$('feedback');
+ const exp=fb.textContent.replace(/^Incorrect\.\s*/,'');
+ box.innerHTML=`<div class="wb-hint">&#8595; Scroll below to continue</div><div class="wb-tag">Incorrect</div><div class="wb-exp"></div><div class="wb-recap"><div class="wb-rt">Question recap</div>${q.diagram?`<div class="wb-diagram">${q.diagram}</div>`:''}<div class="wb-q"></div><div class="wb-opts">${q.a.map((a,i)=>`<div class="wb-opt${ci.includes(i)?' good':''}"><span class="k">${String.fromCharCode(65+i)}</span><span>${a}</span></div>`).join('')}</div></div>`;
+ box.querySelector('.wb-exp').textContent=exp;box.querySelector('.wb-q').textContent=q.q;
+ $('missileNote').style.display='none';$('qDiagram').style.display='none';$('question').style.display='none';$('answers').style.display='none';fb.style.display='none';
+ $('questionTitle').textContent='Explanation';box.style.display='block';wrongShown=true;
+ const sb=$('sidebar');if(sb&&sb.scrollTo)sb.scrollTo({top:0})}
+function clearUnderstood(){awaiting=false;$('scrollHint').style.display='none';$('understoodWrap').style.display='none';$('feedback').classList.remove('big');
+ if(wrongShown){wrongShown=false;const box=$('wrongBox');box.style.display='none';box.innerHTML='';$('feedback').style.display='';$('qDiagram').style.display='';$('question').style.display='';$('answers').style.display=phase===1?'none':''}}
 function resolve(){
  if(selected.length===0||locked||!started||finished||state==='walking'||seq)return;
  locked=true;$('lockBtn').disabled=true;const q=questions[turn],ci=Array.isArray(q.c)?q.c:[q.c],correct=selected.length===ci.length&&selected.every(i=>ci.includes(i));outcomes[turn]=correct;picked[turn]=[...selected];
@@ -607,7 +632,7 @@ function start(){heroName=$('nameInput').value.trim();studentClass=$('classInput
  if(bad.nameInput||bad.classInput||bad.phoneInput){toast(bad.nameInput?'ENTER YOUR NAME':bad.classInput?'ENTER A SINGLE-DIGIT CLASS':'ENTER A 10-DIGIT PHONE NUMBER');const first=Object.keys(bad).find(k=>bad[k]);$(first).focus();return}
  studentPhone='+91'+ph;try{localStorage.setItem('threeWorldsProfile',JSON.stringify({name:heroName,cls:studentClass,phone:ph}))}catch(err){}
  const music=$('backgroundMusic');enterFullscreen();music.volume=0.25;music.play().catch(()=>{});started=true;$('intro').style.display='none';applyMode();turn=0;beginPhase(0)}
-$('understoodBtn').addEventListener('click',()=>{if(!awaiting)return;clearUnderstood();$('lockBtn').style.display='';$('feedback').textContent='';advanceTurn()});
+$('understoodBtn').addEventListener('click',()=>{if(!awaiting)return;clearUnderstood();$('lockBtn').style.display='';$('feedback').textContent='';const sb=$('sidebar');if(sb&&sb.scrollTo)sb.scrollTo({top:0});advanceTurn()});
 $('startBtn').addEventListener('click',start);$('lockBtn').addEventListener('click',askConfirm);$('yesBtn').addEventListener('click',()=>{hideConfirm();resolve()});$('noBtn').addEventListener('click',hideConfirm);
 function askConfirm(){if(selected.length===0||locked||!started||finished||state==='walking'||seq)return;$('lockBtn').style.display='none';$('confirmBox').style.display='flex'}
 function hideConfirm(){$('confirmBox').style.display='none';$('lockBtn').style.display=''}
@@ -628,7 +653,7 @@ function battleInit(){
  setTimeout(()=>{if(B.on&&!finished)renderQuestion()},3400)}
 function battleQuestion(q){
  const on=phase===1;B.opts=on?q.a:null;B.hover=-1;
- $('answers').style.display=on?'none':'';$('lockBtn').textContent=on?'Launch missile':'Lock answer';
+ $('answers').style.display=on?'none':'';$('missileNote').style.display=on?'block':'none';$('lockBtn').textContent=on?'Launch missile':'Lock answer';
  if(on){const mu=!!q.multi||(Array.isArray(q.c)&&q.c.length>1);$('feedback').textContent=mu?'You can arm more than one missile. Click the missile or missiles you choose, then launch.':'Click the missile carrying the correct answer to arm it, then launch.'}}
 const eN=(a,b,t)=>a+(b-a)*t;
 function missRect(i){const n=B.opts?B.opts.length:5;return{x:MX+B.mo[i]-(1-B.rackA)*70,y:PY+(i-(n-1)/2)*MGAP,w:MW,h:MH}}
@@ -649,7 +674,7 @@ function killEnemy(){
  setTimeout(()=>boom(B.ex-50,B.ey-30,false),140);setTimeout(()=>boom(B.ex+40,B.ey+30,false),260);setTimeout(()=>boom(B.ex,B.ey-10,true),380);
  log(`${ENEMY[k].n} destroyed.`);toast('ENEMY DESTROYED');updateUI();
  setTimeout(()=>{if(!opened.every(Boolean)){B.k=opened.filter(Boolean).length;B.alive=true;B.arrive=0;B.ex=1580;log(`${ENEMY[B.k].n} enters the sector.`);updateUI()}},1500);
- setTimeout(()=>{if(!finished&&B.on)waitUnderstood()},1900)}
+ setTimeout(()=>{if(!finished&&B.on){$('lockBtn').style.display='';advanceTurn()}},1900)}
 function updateBattle(dt){
  if(!B.on)return;const flying=seq&&seq.kind==='bfly';
  B.hIn=Math.min(1,B.hIn+dt/1.8);B.arrive=Math.min(1,B.arrive+dt/1.7);
